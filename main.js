@@ -31,6 +31,36 @@ var App = React.createClass({
   }
 });
 
+var Search = React.createClass({
+  render: function() {
+    return (
+      <div>
+      <p>Search</p>
+      </div>
+    )
+  }
+});
+
+var Results = React.createClass({
+	
+	render: function(){
+		var resultItems = this.props.searchResults.map(function(result){
+			return <ResultItem body={result.BODY} name={result.NAME} />
+		});
+		return(
+			<ul>
+				{resultItems}
+			</ul>
+		);
+	}
+});
+
+var ResultItem = React.createClass({
+	render:function(){
+		return <li>{this.props.BODY}</li>;
+	}
+});
+
 var Home = React.createClass({
   render: function() {
     return (
@@ -88,36 +118,6 @@ var Cats = React.createClass({
       </div>
     )
   }
-});
-
-var Search = React.createClass({
-  render: function() {
-    return (
-      <div>
-      <p>Search</p>
-      </div>
-    )
-  }
-});
-
-var Results = React.createClass({
-	
-	render: function(){
-		var resultItems = this.props.searchResults.map(function(result){
-			return <ResultItem body={result.BODY} name={result.NAME} />
-		});
-		return(
-			<ul>
-				{resultItems}
-			</ul>
-		);
-	}
-});
-
-var ResultItem = React.createClass({
-	render:function(){
-		return <li>{this.props.BODY}</li>;
-	}
 });
 
 ReactDOM.render(
