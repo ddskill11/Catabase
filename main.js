@@ -9,10 +9,9 @@ var { hashHistory,
       Route,
       Router} = ReactRouter;
 	  
-InitialState  = { 
-		loading: true,
-		data: null
-	};
+this.state = {
+         data: 0
+      }
 
 var App = React.createClass({
   render: function() {
@@ -48,8 +47,7 @@ var Home = React.createClass({
 
 componentDidMount : function(){
 	this.setState({
-		loading: false,
-		data: responseFromServer
+		data: 
 	});
 },
 
