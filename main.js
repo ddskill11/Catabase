@@ -8,10 +8,6 @@ var { hashHistory,
       Link,
       Route,
       Router} = ReactRouter;
-	  
-this.state = {
-         data: 0
-      }
 
 var App = React.createClass({
   render: function() {
@@ -45,17 +41,40 @@ var Home = React.createClass({
   }
 });
 
-componentDidMount : function(){
-	this.setState({
-		data: 
-	});
-},
-
 var Newsfeed = React.createClass({
+	getInitialState : function(){
+		return{
+			searchResults: []
+		}
+	},
+	
+	showResults: function(response){
+		this.setState({
+			searchResults: response.results
+		})
+		console.log(response);
+	},
+	
+	search: function(URL){
+		$.ajax({
+			type: "GET",
+			dataType: 'json',
+			url: URL,
+			success: function(response){
+				this.showResults(response);
+			}.bind(this)
+		});
+	},
+	
+	componentDidMount(){
+		this.search('https://csunix.mohawkcollege.ca/~000358671/private/10125/2/backend.php?action=allposts');
+	},
+	
   render: function() {
     return (
       <div>
       <p>Newsfeed</p>
+	  <Results searchResults={this.state.searchResults} />
       </div>
     )
   }
@@ -79,6 +98,26 @@ var Search = React.createClass({
       </div>
     )
   }
+});
+
+var Results = React.createClass({
+	
+	render: function(){
+		var resultItems = this.props.searchResults.map(function(result){
+			return <ResultItem body={result.BODY} name={result.NAME} />
+		});
+		return(
+			<ul>
+				{resultItems}
+			</ul>
+		);
+	}
+});
+
+var ResultItem = React.createClass({
+	render:function(){
+		return <li>{this.props.BODY}</li>;
+	}
 });
 
 ReactDOM.render(
